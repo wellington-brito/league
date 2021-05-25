@@ -11,10 +11,12 @@ This apication will be connect to riot's API to get list of all champions of lea
 >this version will get a json list from riot's API
 
 >### v0.0.3
->>>Data and json objects
+>>Data and json objects
 >this version will manipulate json list and convert to objects and start to do design layout of app.
 
-
+>### v0.0.4
+>>Automated testing
+>for this version i'm going to do some tests to learn about automated testing in flutter aplication.
 ## Getting Started
 
 This project is a starting point for a Flutter application.

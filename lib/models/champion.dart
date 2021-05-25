@@ -12,4 +12,14 @@ class Champion {
     required this.name,
     required this.title,
   });
+
+  // factory Champion.fromJson(Map<String, dynamic> json) {
+  //   return Champion(
+  //     version: json['version'],
+  //     id: json['id'],
+  //     key: json['key'],
+  //     name: json['name'],
+  //     title: json['title'],
+  //   );
+  // }
 }
