@@ -8,6 +8,8 @@ import '../models/champion.dart';
 
 class ChampionService {
 
+
+
   static const API = 'http://ddragon.leagueoflegends.com/cdn/';
   static const headers = {
     'apikey': 'hash aqui',
@@ -20,11 +22,20 @@ class ChampionService {
       if (response.statusCode == 200) {
         final champions  = <Champion>[];
         Map<String, dynamic> list = jsonDecode(response.body);
-
+        
         //final teste = Champion.fromJson(list).toList();
         //log('LOG'+teste.toString());
-        log('nome, ${list['data']}');
-        //log("REQUISITION DONE"+list.toString());
+        //log('nome, ${list['data']}');
+        //print("REQUISITION DONE"+response.body);
+
+        for(Object data in list['data'].keys) {
+          //print(data.toString());
+          Map<String, dynamic> ch = list['data'][data];
+          if(data == 'Lux')
+          print(ch['info']);
+        }
+
+
         return APIResponse<List<Champion>>(data: champions);
       }
       return APIResponse<List<Champion>>(data: [], error: true, errorMessage: 'An erro ocurred.');
