@@ -3,7 +3,7 @@ A Flutter basic aplication  to practice dart language.
 This apication will be connect to riot's API to get list of all champions of league of legends and show you details in the screen.
 
 >### v0.0.1
->>Static List<br>
+>>Static List<br>ok
 >this version is showing list from hardcode array;
 
 >### v0.0.2
