@@ -4,6 +4,8 @@ class Champion {
   String key;
   String name;
   String title;
+  String blurb;
+
 
   Champion({
     required this.version,
@@ -11,6 +13,7 @@ class Champion {
     required this.key,
     required this.name,
     required this.title,
+    required this.blurb,
   });
 
   factory Champion.fromJson(Map<String, dynamic> json) {
@@ -20,6 +23,7 @@ class Champion {
       key: json['key'],
       name: json['name'],
       title: json['title'],
+      blurb: json['blurb'],
     );
   }
 }
