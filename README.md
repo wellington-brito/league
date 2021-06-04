@@ -1,6 +1,21 @@
 # league
 A Flutter basic aplication  to practice dart language.
-This apication will be connect to riot's API to get list of all champions of league of legends and show you details in the screen.
+This application will be connect to riot's API to get list of all champions of league of legends and show you details in the screen.
+
+
+## Getting Started
+
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+
+For help getting started with Flutter, view our
+[online documentation](https://flutter.dev/docs), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
+
 
 >### v0.0.1
 >>Static List<br>ok
@@ -17,15 +32,14 @@ This apication will be connect to riot's API to get list of all champions of lea
 >### v0.0.4
 >>Automated testing
 >for this version i'm going to do some tests to learn about automated testing in flutter aplication.
-## Getting Started
+>removed champion's count from toolbar, causing 'late' error by call of _apiResponse...
+>
 
-This project is a starting point for a Flutter application.
+>### v0.0.5
+>>StorageData and assets
+>for this version i'm going to do implement local data storage for data of champions list 
+>
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+>### Main Troubles
+- [Insecure HTTP connections are disabled by default on iOS and Android](https://flutter.dev/docs/release/breaking-changes/network-policy-ios-android)
