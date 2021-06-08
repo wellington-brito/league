@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:league/services/champion_service.dart';
 import 'package:league/views/champion_list.dart';
 import 'package:get_it/get_it.dart';
+import 'package:league/views/perfil_stats.dart';
 
 
 GetIt getIt = GetIt.I;
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      home: ChampionList(),
+      home: PerfilStats(),
     );
   }
 }

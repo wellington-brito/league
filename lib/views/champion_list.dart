@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:league/models/api_response.dart';
 import 'package:league/models/champion.dart';
 import 'package:league/services/champion_service.dart';
+import 'package:alert/alert.dart';
 
 class ChampionList extends StatefulWidget {
   @override
@@ -62,6 +63,7 @@ class _ChampionListState extends State<ChampionList> {
                     subtitle: Text(
                       _apiResponse.data[index].title,
                     ),
+                    onTap: () => Alert(message:  _apiResponse.data[index].blurb, shortDuration: false).show()
                   );
                 },
                 itemCount: _apiResponse.data.length,
