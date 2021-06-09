@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:league/services/champion_service.dart';
+import 'package:league/services/summoner_service.dart';
 import 'package:league/views/champion_list.dart';
 import 'package:get_it/get_it.dart';
-import 'package:league/views/perfil_stats.dart';
+import 'package:league/views/search_summoner_view_.dart';
 
 
-GetIt getIt = GetIt.I;
+final GetIt getIt = GetIt.I;
 
 void main() {
   setUpLocator();
@@ -16,6 +17,7 @@ void main() {
 
 void setUpLocator(){
   getIt.registerLazySingleton(() => ChampionService());
+  getIt.registerSingleton(() => SummonerService());
 }
 
 class MyApp extends StatelessWidget {
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      home: PerfilStats(),
+      home: SearchSummonerView(),
     );
   }
 }

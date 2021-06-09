@@ -7,7 +7,6 @@ class Champion {
   String blurb;
   //String skins;
 
-
   Champion({
     required this.version,
     required this.id,
