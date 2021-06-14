@@ -17,7 +17,7 @@ void main() {
 
 void setUpLocator(){
   getIt.registerLazySingleton(() => ChampionService());
-  getIt.registerSingleton(() => SummonerService());
+  getIt.registerFactory<SummonerService>(() => SummonerService());
 }
 
 class MyApp extends StatelessWidget {

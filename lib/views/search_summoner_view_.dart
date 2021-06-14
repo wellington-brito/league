@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -12,60 +14,68 @@ class SearchSummonerView extends StatefulWidget {
 
 class _SearchSummonerViewState extends State<SearchSummonerView> {
   SummonerService get service => GetIt.I<SummonerService>();
-  late APIResponse<List<Summoner>> _apiResponse;
+  late APIResponse<Summoner> _apiResponse;
   String nickName = "";
-
+  bool _isLoading = false;
+  final myInputTextController = TextEditingController();
+  
   @override
   void initState() {
     super.initState();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: Text('Champion List')),
-        body: Builder(
-            builder: (_){
-              return Form(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        hintText: 'Enter the nick name',
-                      ),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter nick name from server BR';
-                        } else {
-                          nickName = value;
-                        }
-                        return null;
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 16.0, horizontal: 16.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Validate will return true if the form is valid, or false if
-                          // the form is invalid.
+  _fetchSummoner(nickName) async {
+    setState((){
+      _isLoading = true;
+    });
 
-                          // Process data.
-                          _apiResponse = service.getDataSummoner(nickName) as APIResponse<List<Summoner>>;
-                          // print(_apiResponse.toString());
+    _apiResponse = await service.getDataSummoner(nickName);
 
-                        },
-                        child: const Text('Search'),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-            ));
+    setState(() {
+      _isLoading = false;
+    });
   }
 
 
+  // Create a text controller and use it to retrieve the current value
+  // of the TextField.
+
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myInputTextController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Fill this out in the next step.
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Pesquisar'),
+      ),
+      body: Column(
+        children: <Widget>[
+          TextField(
+            controller: myInputTextController,
+          ),
+          Text(
+            "_apiResponse.data.id",
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          )
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {
+          _fetchSummoner(myInputTextController.text),
+        print(_apiResponse.data),
+        },
+        child: Icon(Icons.text_fields),
+      ),
+    );
+  }
 
 }

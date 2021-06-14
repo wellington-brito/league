@@ -1,5 +1,5 @@
 class Summoner {
-  String id, accountId, puuid, name, profileIconId, revisionDate, summonerLevel;
+  String id = '', accountId = '', puuid = '', name = '', profileIconId = '', revisionDate = '', summonerLevel = '';
 
   Summoner({
     required this.id,
