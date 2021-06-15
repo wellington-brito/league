@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -14,9 +13,10 @@ class SearchSummonerView extends StatefulWidget {
 
 class _SearchSummonerViewState extends State<SearchSummonerView> {
   SummonerService get service => GetIt.I<SummonerService>();
-  late APIResponse<Summoner> _apiResponse;
-  String nickName = "";
+  late APIResponse<List<Summoner>> _apiResponse;
+  late Summoner summoner;
   bool _isLoading = false;
+  String nickName = "";
   final myInputTextController = TextEditingController();
   
   @override
@@ -29,7 +29,11 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
       _isLoading = true;
     });
 
-    _apiResponse = await service.getDataSummoner(nickName);
+    //_apiResponse = await service.getDataSummoner(nickName);
+
+    // _apiResponse.data.forEach( await (element) {
+    //   this.summoner = element;
+    // });
 
     setState(() {
       _isLoading = false;
@@ -61,12 +65,12 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
             controller: myInputTextController,
           ),
           Text(
-            "summonerLevel: "+_apiResponse.data.summonerLevel,
+            "summonerLevel:  + summoner.summonerLevel",
             textAlign: TextAlign.left,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           Text(
-            "name: "+_apiResponse.data.name,
+            "name:  + summoner.name",
             textAlign: TextAlign.left,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),

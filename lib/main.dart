@@ -17,7 +17,7 @@ void main() {
 
 void setUpLocator(){
   getIt.registerLazySingleton(() => ChampionService());
-  getIt.registerFactory<SummonerService>(() => SummonerService());
+  getIt.registerFactory(() => SummonerService());
 }
 
 class MyApp extends StatelessWidget {
@@ -29,7 +29,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      home: SearchSummonerView(),
+      //home: SearchSummonerView(),
+      home: ChampionList(),
     );
   }
 }

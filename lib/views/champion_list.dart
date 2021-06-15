@@ -5,6 +5,7 @@ import 'package:league/models/api_response.dart';
 import 'package:league/models/champion.dart';
 import 'package:league/services/champion_service.dart';
 import 'package:alert/alert.dart';
+import 'package:league/views/search_summoner_view_.dart';
 
 class ChampionList extends StatefulWidget {
   @override
@@ -37,7 +38,19 @@ class _ChampionListState extends State<ChampionList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Champion List')),
+        appBar: AppBar(
+            title: Text('Champion List'),
+            leading: GestureDetector(
+              onTap: () => {
+                Navigator.push(
+                  context,
+                MaterialPageRoute(builder: (context) => SearchSummonerView())),
+              },
+              child: Icon(
+                Icons.search,
+              ),
+            ),
+        ),
         body: Builder(
           builder: (_) {
             if (_isLoading) {

@@ -33,6 +33,9 @@ samples, guidance on mobile development, and a full API reference.
 >>Automated testing
 >for this version i'm going to do some tests to learn about automated testing in flutter aplication.
 >removed champion's count from toolbar, causing 'late' error by call of _apiResponse...
+>error late initialization _responseApi. Estudar mais sobre controle de estado e future...
+>Navigation.push to second screen for search summoner. In future I want search my history matches and compare with another player too...
+
 >
 
 >### v0.0.5

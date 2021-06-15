@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:league/models/api_response.dart';
 import 'package:league/models/summoner.dart';
 import 'package:http/http.dart' as http;
@@ -17,7 +16,7 @@ class SummonerService {
     "X-Riot-Token": ""
   };
 
-  Future<APIResponse<Summoner>> getDataSummoner(nickName) {
+  Future<APIResponse<List<Summoner>>> getDataSummoner(nickName) {
     return http
         .get(Uri.parse(api + nickName), headers: headers)
         .then((response) {
@@ -34,9 +33,10 @@ class SummonerService {
               revisionDate: summonerFromJson['revisionDate'].toString(),
               summonerLevel: summonerFromJson['summonerLevel'].toString()
           );
-
+          final summoners = <Summoner>[];
+          summoners.add(summoner);
           matchService.getMatches(summoner.puuid);
-          return APIResponse<Summoner>(data: summoner );
+          return APIResponse<List<Summoner>>(data: summoners );
         } else {
           ///print("RESPONSE "+response.statusCode.toString());
           throw Exception('Failed to load data of summoner');

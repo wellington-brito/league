@@ -16,6 +16,7 @@ class MatchService {
   };
 
   getMatches(puuid) {
+    //print(puuid);
     return http
         .get(Uri.parse(
         'https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/'+ puuid +'/ids?start=0&count=5'), headers: headers)
