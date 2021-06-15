@@ -61,17 +61,22 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
             controller: myInputTextController,
           ),
           Text(
-            "_apiResponse.data.id",
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
+            "summonerLevel: "+_apiResponse.data.summonerLevel,
+            textAlign: TextAlign.left,
             style: const TextStyle(fontWeight: FontWeight.bold),
-          )
+          ),
+          Text(
+            "name: "+_apiResponse.data.name,
+            textAlign: TextAlign.left,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => {
           _fetchSummoner(myInputTextController.text),
-        print(_apiResponse.data),
+        //print(_apiResponse.data.puuid),
         },
         child: Icon(Icons.text_fields),
       ),

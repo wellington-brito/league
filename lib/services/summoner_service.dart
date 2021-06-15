@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:league/models/api_response.dart';
 import 'package:league/models/summoner.dart';
 import 'package:http/http.dart' as http;
+import 'package:league/services/match_service.dart';
 import '../models/summoner.dart';
 
 class SummonerService {
@@ -23,7 +24,7 @@ class SummonerService {
         if (response.statusCode == 200) {
 
           Map<String, dynamic> summonerFromJson = jsonDecode(response.body);
-
+          MatchService matchService = new MatchService();
           Summoner summoner = new Summoner(
               id: summonerFromJson['id'].toString(),
               accountId: summonerFromJson['accountId'].toString(),
@@ -34,7 +35,7 @@ class SummonerService {
               summonerLevel: summonerFromJson['summonerLevel'].toString()
           );
 
-          print("RESPONSE "+ summoner.accountId.toString());
+          matchService.getMatches(summoner.puuid);
           return APIResponse<Summoner>(data: summoner );
         } else {
           ///print("RESPONSE "+response.statusCode.toString());
