@@ -1,6 +1,7 @@
-# league
+# League
 A Flutter basic aplication  to practice dart language.
-This application will be connect to riot's API to get list of all champions of league of legends and show you details in the screen.
+This application will be connect to Riot's (riot games) API to get list of all champions of league of legends and show
+details in the screen. And verify if some summoner in this current match have played before matchs with you.
 
 
 ## Getting Started
@@ -17,32 +18,30 @@ For help getting started with Flutter, view our
 samples, guidance on mobile development, and a full API reference.
 
 
->### v0.0.1
->>Static List<br>ok
+>### v0.0.1 :heavy_check_mark:
+>>Static List
 >this version is showing list from hardcode array;
 
->### v0.0.2
->>Connect to riot's API<br>
->this version will get a json list from riot's API
+>### v0.0.2 :heavy_check_mark:
+>Connect to riot's API.<br>
+>this version will get a json list from riot's API.
 
->### v0.0.3
->>Data and json objects
+>### v0.0.3 :heavy_check_mark:
+>>Data and json objects.<br>
 >this version will manipulate json list and convert to objects and start to do design layout of app.
 
 >### v0.0.4
->>Automated testing
->for this version i'm going to do some tests to learn about automated testing in flutter aplication.
->removed champion's count from toolbar, causing 'late' error by call of _apiResponse...
->error late initialization _responseApi. Estudar mais sobre controle de estado e future...
->Navigation.push to second screen for search summoner. In future I want search my history matches and compare with another player too...
-
->
+>>For this version i'm going to do implement local data storage for data of champions list and summoner.<br>
+>Removed champion's count from toolbar, causing 'late' error by call of _apiResponse.<br>
+>Error late initialization _responseApi. Estudar mais sobre controle de estado e future.<br>
+>Navigation.push to second screen for search summoner. In future I want search my history matches and compare with another player too.<br>
 
 >### v0.0.5
->>StorageData and assets
->for this version i'm going to do implement local data storage for data of champions list 
->
+>>Automated testing.<br>
+>>For this version i'm going to do some tests to learn about automated testing in flutter aplication.<br>
+>>StorageData and assets.<br>
 
-
+>###Content that i'am following to do this project can be finded in:
+>###[Programming Addict - Interacting with a REST API | HTTP Methods, Status Codes... | Consuming a REST API in Flutter] (https://www.youtube.com/watch?v=ZMNp9Ev6cl0)
 >### Main Troubles
 - [Insecure HTTP connections are disabled by default on iOS and Android](https://flutter.dev/docs/release/breaking-changes/network-policy-ios-android)
