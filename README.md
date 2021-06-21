@@ -20,25 +20,30 @@ samples, guidance on mobile development, and a full API reference.
 
 >### v0.0.1 :heavy_check_mark:
 >Static List
->this version is showing list from hardcode array;
+>>this version is showing list from hardcode array;
 
 >### v0.0.2 :heavy_check_mark:
 >Connect to riot's API.<br>
->this version will get a json list from riot's API.
+>>this version will get a json list from riot's API.
 
 >### v0.0.3 :heavy_check_mark:
 >Data and json objects.<br>
->this version will manipulate json list and convert to objects and start to do design layout of app.
+>>this version will manipulate json list and convert to objects and start to do design layout of app.
 
->### v0.0.4
+>### v0.0.4 :heavy_check_mark:
 >For this version i'm going to do implement shared preferences for summoner data of user of app.<br>
->Removed champion's count from toolbar, causing 'late' error by call of _apiResponse.<br>
+>>Removed champion's count from toolbar.
+>>'late' error by call of _apiResponse.<br>
 >Error late initialization _responseApi. Estudar mais sobre controle de estado e future.<br>
->>Late initialization solved future and state management<br>
+>>Late initialization solved whit future functions and state management<br>
 >>Navigation.push to second screen for search summoner. Changed main.dart to start app with screen to search other summoner.<br>
 
+>### v0.0.5
+>I want to search in my history matches if another player was played with me.<br>
+>>get list with the last five matchesId of summoner in sharedPref. (user of app).<br>
+>>get list history matches in acording of matchId 
+>>verify in the list if 'other summoner' was played with me by 'puuid'. 
 ### Next Steps
->In future I want to search in my history matches if another player was played with me.<br>
 >Learn about automated testing.<br>
 >For this version i'm going to do some tests to learn about automated testing in flutter aplication.<br>
 >StorageData and assets.<br>
