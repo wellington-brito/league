@@ -19,7 +19,7 @@ samples, guidance on mobile development, and a full API reference.
 
 
 >### v0.0.1 :heavy_check_mark:
->>Static List
+>Static List
 >this version is showing list from hardcode array;
 
 >### v0.0.2 :heavy_check_mark:
@@ -27,21 +27,24 @@ samples, guidance on mobile development, and a full API reference.
 >this version will get a json list from riot's API.
 
 >### v0.0.3 :heavy_check_mark:
->>Data and json objects.<br>
+>Data and json objects.<br>
 >this version will manipulate json list and convert to objects and start to do design layout of app.
 
 >### v0.0.4
->>For this version i'm going to do implement local data storage for data of champions list and summoner.<br>
+>For this version i'm going to do implement shared preferences for summoner data of user of app.<br>
 >Removed champion's count from toolbar, causing 'late' error by call of _apiResponse.<br>
 >Error late initialization _responseApi. Estudar mais sobre controle de estado e future.<br>
->Navigation.push to second screen for search summoner. In future I want search my history matches and compare with another player too.<br>
+>>Late initialization solved future and state management<br>
+>>Navigation.push to second screen for search summoner. Changed main.dart to start app with screen to search other summoner.<br>
 
->### v0.0.5
->>Automated testing.<br>
->>For this version i'm going to do some tests to learn about automated testing in flutter aplication.<br>
->>StorageData and assets.<br>
+### Next Steps
+>In future I want to search in my history matches if another player was played with me.<br>
+>Learn about automated testing.<br>
+>For this version i'm going to do some tests to learn about automated testing in flutter aplication.<br>
+>StorageData and assets.<br>
 
->###Content that i'am following to do this project can be finded in:
->###[Programming Addict - Interacting with a REST API | HTTP Methods, Status Codes... | Consuming a REST API in Flutter] (https://www.youtube.com/watch?v=ZMNp9Ev6cl0)
->### Main Troubles
+### Content that i'am following to do this project can be finded in:
+- [Programming Addict - Interacting with a REST API | HTTP Methods, Status Codes... | Consuming a REST API in Flutter] (https://www.youtube.com/watch?v=ZMNp9Ev6cl0)<br>
+
+### Main Troubles
 - [Insecure HTTP connections are disabled by default on iOS and Android](https://flutter.dev/docs/release/breaking-changes/network-policy-ios-android)
