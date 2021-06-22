@@ -11,7 +11,7 @@ class SummonerService {
     "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
     "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
     "Origin": "https://developer.riotgames.com",
-    "X-Riot-Token": ""
+    "X-Riot-Token": "RGAPI-bba1a6fd-e132-4d27-8949-dc7e6e9be057"
   };
 
   Future<Summoner> getDataSummoner(nickName) {

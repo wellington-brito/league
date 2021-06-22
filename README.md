@@ -28,7 +28,7 @@ samples, guidance on mobile development, and a full API reference.
 
 >### v0.0.3 :heavy_check_mark:
 >Data and json objects.<br>
->>this version will manipulate json list and convert to objects and start to do design layout of app.
+>>this version will manipulate json list and convert to objects and.
 
 >### v0.0.4 :heavy_check_mark:
 >For this version i'm going to do implement shared preferences for summoner data of user of app.<br>
@@ -40,9 +40,11 @@ samples, guidance on mobile development, and a full API reference.
 
 >### v0.0.5
 >I want to search in my history matches if another player was played with me.<br>
+>Changes in design layout of app.<br>
 >>get list with the last five matchesId of summoner in sharedPref. (user of app).<br>
 >>get list history matches in acording of matchId 
->>verify in the list if 'other summoner' was played with me by 'puuid'. 
+>>verify in the list if 'other summoner' was played with me by 'puuid'. <br>
+
 ### Next Steps
 >Learn about automated testing.<br>
 >For this version i'm going to do some tests to learn about automated testing in flutter aplication.<br>

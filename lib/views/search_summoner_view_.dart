@@ -6,6 +6,7 @@ import 'package:league/services/summoner_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 String? nameCache = "";
+String nameCacheConverted = "";
 String? summonerLevelCache = "";
 bool _isLoading = false;
 String nickName = "";
@@ -36,6 +37,7 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
   final inputTextMyNickCtrl = TextEditingController();
   final inputTextCtrl = TextEditingController();
 
+  //Start states and data from cache.
   @override
   void initState() {
     _getDataCache().whenComplete(() async => null);
@@ -54,18 +56,55 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
   }
 
   Future<void> _fetchSummoner(nickName, otherNickName) async {
-    setState(() {
-      _isLoading = true;
-    });
+    try {
+      setState(() {
+        _isLoading = true;
+      });
 
-    if (nameCache == '') await service.getDataSummoner(nickName);
+      if (nameCache == null) {
+        await service.getDataSummoner(nickName);
+        _getDataCache();
+      }
 
-    var respOther = await service.getDataEnemy(otherNickName);
+      var respOther = await service.getDataEnemy(otherNickName);
 
-    setState(() {
-      if (otherNickName != '') otherSummoner = respOther;
-      _isLoading = false;
-    });
+      setState(() {
+        if (otherNickName != '') otherSummoner = respOther;
+        _isLoading = false;
+      });
+    } catch (e) {
+      _showMyDialog(e);
+    }
+  }
+
+  Future<void> _showMyDialog(e) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('AlertDialog Title'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(e.toString()),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                setState(() {
+                  _isLoading = false;
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   // Create a text controller and use it to retrieve the current value
@@ -80,7 +119,6 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
 
   @override
   Widget build(BuildContext context) {
-    // Fill this out in the next step.
     return Scaffold(
       appBar: AppBar(
         title: Text('Pesquisar'),
@@ -89,52 +127,117 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            TextField(
-                controller: inputTextMyNickCtrl,
-                decoration: InputDecoration(
-                  hintText: 'Your summoner name.',
-                )),
-            TextField(
-              controller: inputTextCtrl,
-              decoration: InputDecoration(
-                hintText: 'Summoner name to search in your matches history.',
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    TextField(
+                        controller: inputTextMyNickCtrl,
+                        decoration: InputDecoration(
+                          hintText: 'Your summoner name.',
+                        )),
+                    TextField(
+                      controller: inputTextCtrl,
+                      decoration: InputDecoration(
+                        hintText:
+                            'Summoner name to search in your matches history.',
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            const Divider(
-              height: 20,
-              thickness: 5,
-              indent: 20,
-              endIndent: 20,
-            ),
-            _isLoading
-                ? CircularProgressIndicator()
-                : Text(
-                    "Other summonerLevel: " + otherSummoner.summonerLevel,
-                    textAlign: TextAlign.left,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+            Card(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    leading: Icon(Icons.person),
+                    title: Text(
+                      nameCache.toString() + " (you)",
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
-            _isLoading
-                ? CircularProgressIndicator()
-                : Text(
-                    "Other Nickname: " + otherSummoner.name,
-                    textAlign: TextAlign.left,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  Row(
+                    children: <Widget>[
+                      const SizedBox(
+                        width: 73,
+                      ),
+                      Text(
+                        "Level " + summonerLevelCache.toString(),
+                        style: const TextStyle(fontWeight: FontWeight.normal),
+                      ),
+                    ],
                   ),
-            const Divider(
-              height: 20,
-              thickness: 5,
-              indent: 20,
-              endIndent: 20,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      const SizedBox(width: 8),
+                      TextButton(
+                        onPressed: () {},
+                        child: const Text('LIMPAR'),
+                      ),
+                      const SizedBox(width: 8),
+                    ],
+                  ),
+                ],
+              ),
             ),
             Text(
-              "Cache nickName: " + nameCache.toString(),
-              textAlign: TextAlign.left,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              "played with",
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  fontWeight: FontWeight.normal, color: Colors.blueGrey),
             ),
-            Text(
-              "Cache level: " + summonerLevelCache.toString(),
-              textAlign: TextAlign.left,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+            Card(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  _isLoading
+                      ? const SizedBox(width: 73)
+                      : ListTile(
+                          leading: Icon(Icons.person),
+                          title: _isLoading
+                              ? CircularProgressIndicator()
+                              : Text(
+                                  _isLoading ? "Summoner" : otherSummoner.name,
+                                  textAlign: TextAlign.left,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                        ),
+                  Row(
+                    children: <Widget>[
+                      const SizedBox(
+                        width: 73,
+                      ),
+                      _isLoading
+                          ? CircularProgressIndicator()
+                          : Text(
+                              _isLoading
+                                  ? "Level "
+                                  : "Level " + otherSummoner.summonerLevel,
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.normal),
+                            ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      const SizedBox(width: 8),
+                      TextButton(
+                        onPressed: () {},
+                        child: const Text('LIMPAR'),
+                      ),
+                      const SizedBox(width: 8),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -144,7 +247,7 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
           _fetchSummoner(inputTextMyNickCtrl.text, inputTextCtrl.text),
           _getDataCache(),
         },
-        child: Icon(Icons.text_fields),
+        child: Icon(Icons.manage_search),
       ),
     );
   }
