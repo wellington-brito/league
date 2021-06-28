@@ -44,6 +44,7 @@ samples, guidance on mobile development, and a full API reference.
 >>get list with the last five matchesId of summoner in sharedPref. (user of app).<br>
 >>get list history matches in acording of matchId 
 >>verify in the list if 'other summoner' was played with me by 'puuid'. <br>
+>>changes layout theme color and validation on inputs.<br>
 
 ### Next Steps
 >Learn about automated testing.<br>

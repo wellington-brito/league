@@ -17,15 +17,17 @@ class SearchSummonerView extends StatefulWidget {
 }
 
 class _SearchSummonerViewState extends State<SearchSummonerView> {
+  // Create a global key that uniquely identifies the Form widget  and allows validation of the form.
+  final _formKey = GlobalKey<FormState>();
   SummonerService get service => GetIt.I<SummonerService>();
   var otherSummoner = new Summoner(
       id: '',
       accountId: '',
       puuid: '',
-      name: '',
+      name: 'Other Summoner',
       profileIconId: '',
       revisionDate: '',
-      summonerLevel: '');
+      summonerLevel: '0');
   var summoner = new Summoner(
       id: '',
       accountId: '',
@@ -48,7 +50,10 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? prefsName = prefs.getString('name');
     String? prefsSummonerLevel = prefs.getString('summonerLevel');
-
+    if (prefsName == null && prefsSummonerLevel == null) {
+      prefsName = "Summoner";
+      prefsSummonerLevel = "0";
+    }
     setState(() {
       nameCache = prefsName;
       summonerLevelCache = prefsSummonerLevel;
@@ -57,33 +62,37 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
 
   Future<void> _fetchSummoner(nickName, otherNickName) async {
     try {
+      var respOther;
       setState(() {
         _isLoading = true;
       });
 
-      if (nameCache == null) {
+      if (nickName != '') {
         await service.getDataSummoner(nickName);
         _getDataCache();
       }
 
-      var respOther = await service.getDataEnemy(otherNickName);
+      if (otherNickName != '') {
+        respOther = await service.getDataEnemy(otherNickName);
+        _getDataCache();
+      }
 
       setState(() {
-        if (otherNickName != '') otherSummoner = respOther;
+        otherSummoner = respOther;
         _isLoading = false;
       });
     } catch (e) {
-      _showMyDialog(e);
+      _showErrorDialog(e);
     }
   }
 
-  Future<void> _showMyDialog(e) async {
+  Future<void> _showErrorDialog(e) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('AlertDialog Title'),
+          title: const Text('Error on Load data.'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -107,6 +116,13 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
     );
   }
 
+  _clearInputs() {
+    inputTextMyNickCtrl.clear();
+    inputTextCtrl.clear();
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    currentFocus.unfocus();
+  }
+
   // Create a text controller and use it to retrieve the current value
   // of the TextField.
   @override
@@ -123,26 +139,69 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
       appBar: AppBar(
         title: Text('Pesquisar'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Card(
+              margin: EdgeInsets.all(16.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    TextField(
-                        controller: inputTextMyNickCtrl,
-                        decoration: InputDecoration(
-                          hintText: 'Your summoner name.',
-                        )),
-                    TextField(
-                      controller: inputTextCtrl,
-                      decoration: InputDecoration(
-                        hintText:
-                            'Summoner name to search in your matches history.',
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: <Widget>[
+                          // Add TextFormFields and ElevatedButton here.
+                          TextFormField(
+                            cursorColor: Theme.of(context).accentColor,
+                            controller: inputTextMyNickCtrl,
+                            decoration: InputDecoration(
+                              hintText: 'Your summoner name.',
+                              fillColor: Theme.of(context).accentColor,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context).accentColor,
+                                    width: 2),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your summoner name.';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(
+                            width: 73,
+                            height: 10,
+                          ),
+                          TextFormField(
+                            controller: inputTextCtrl,
+                            decoration: InputDecoration(
+                              hintText: 'Other Summoner to search.',
+                              fillColor: Theme.of(context).accentColor,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context).accentColor,
+                                    width: 2),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter other summoner name.';
+                              }
+                              return null;
+                            },
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -150,13 +209,19 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
               ),
             ),
             Card(
+              margin: EdgeInsets.all(16.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   ListTile(
                     leading: Icon(Icons.person),
                     title: Text(
-                      nameCache.toString() + " (you)",
+                      nameCache == ''
+                          ? "Summoner (you)"
+                          : nameCache.toString() + " (you)",
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -176,8 +241,18 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
                     children: <Widget>[
                       const SizedBox(width: 8),
                       TextButton(
-                        onPressed: () {},
-                        child: const Text('LIMPAR'),
+                        onPressed: () {
+                          service.clearCacheSummoner();
+                          setState(() {
+                            nameCache = '';
+                            summonerLevelCache = '';
+                          });
+                        },
+                        child: Text(
+                          'CLEAR',
+                          style:
+                              TextStyle(color: Theme.of(context).accentColor),
+                        ),
                       ),
                       const SizedBox(width: 8),
                     ],
@@ -188,41 +263,41 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
             Text(
               "played with",
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                  fontWeight: FontWeight.normal, color: Colors.blueGrey),
+              style:
+                  TextStyle(fontWeight: FontWeight.normal, color: Colors.grey),
             ),
             Card(
+              margin: EdgeInsets.all(16.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  _isLoading
-                      ? const SizedBox(width: 73)
-                      : ListTile(
-                          leading: Icon(Icons.person),
-                          title: _isLoading
-                              ? CircularProgressIndicator()
-                              : Text(
-                                  _isLoading ? "Summoner" : otherSummoner.name,
-                                  textAlign: TextAlign.left,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
-                                ),
-                        ),
+                  const SizedBox(width: 73),
+                  ListTile(
+                    leading: _isLoading
+                        ? CircularProgressIndicator(
+                            valueColor: new AlwaysStoppedAnimation<Color>(
+                                Theme.of(context).accentColor),
+                          )
+                        : Icon(Icons.person),
+                    title: Text(
+                      otherSummoner.name.toString(),
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
                   Row(
                     children: <Widget>[
                       const SizedBox(
                         width: 73,
                       ),
-                      _isLoading
-                          ? CircularProgressIndicator()
-                          : Text(
-                              _isLoading
-                                  ? "Level "
-                                  : "Level " + otherSummoner.summonerLevel,
-                              textAlign: TextAlign.left,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.normal),
-                            ),
+                      Text(
+                        "Level " + otherSummoner.summonerLevel,
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(fontWeight: FontWeight.normal),
+                      ),
                     ],
                   ),
                   Row(
@@ -231,7 +306,7 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
                       const SizedBox(width: 8),
                       TextButton(
                         onPressed: () {},
-                        child: const Text('LIMPAR'),
+                        child: const Text(''),
                       ),
                       const SizedBox(width: 8),
                     ],
@@ -244,10 +319,17 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => {
-          _fetchSummoner(inputTextMyNickCtrl.text, inputTextCtrl.text),
-          _getDataCache(),
+          if (_formKey.currentState!.validate())
+            {
+              // If the form is valid, display a snackbar. In the real world,
+              _fetchSummoner(inputTextMyNickCtrl.text, inputTextCtrl.text),
+              _getDataCache(),
+              _clearInputs(),
+            }
         },
-        child: Icon(Icons.manage_search),
+        child: _isLoading
+            ? Icon(Icons.hourglass_top_sharp)
+            : Icon(Icons.manage_search),
       ),
     );
   }

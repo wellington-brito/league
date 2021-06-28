@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:league/models/summoner.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,7 +12,7 @@ class SummonerService {
     "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
     "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
     "Origin": "https://developer.riotgames.com",
-    "X-Riot-Token": "RGAPI-bba1a6fd-e132-4d27-8949-dc7e6e9be057"
+    "X-Riot-Token": ""
   };
 
   Future<Summoner> getDataSummoner(nickName) {
@@ -35,7 +36,7 @@ class SummonerService {
         return summoner;
       } else {
         print("RESPONSE " + response.statusCode.toString());
-        throw Exception('Failed to load data of summoner');
+        throw Exception('Failed to load data of your summoner');
       }
     });
   }
@@ -59,16 +60,24 @@ class SummonerService {
         return summoner;
       } else {
         print("RESPONSE " + response.statusCode.toString());
-        throw Exception('Failed to load data of summoner');
+        throw Exception('Failed to load data of Other Summoner');
       }
     });
   }
 
-  storeCache(summoner) async {
+  Future storeCache(summoner) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('puuid', summoner.puuid);
     await prefs.setString('name', summoner.name);
     await prefs.setString('summonerLevel', summoner.summonerLevel);
     print("PUUID: Saved in cache.");
+  }
+
+  clearCacheSummoner() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('puuid', '');
+    await prefs.setString('name', '');
+    await prefs.setString('summonerLevel', '');
+    print("PUUID: clear cache.");
   }
 }
