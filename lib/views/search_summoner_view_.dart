@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 String? nameCache = "";
 String nameCacheConverted = "";
 String? summonerLevelCache = "";
+String? played = "";
 bool _isLoading = false;
 String nickName = "";
 
@@ -19,6 +20,7 @@ class SearchSummonerView extends StatefulWidget {
 class _SearchSummonerViewState extends State<SearchSummonerView> {
   // Create a global key that uniquely identifies the Form widget  and allows validation of the form.
   final _formKey = GlobalKey<FormState>();
+
   SummonerService get service => GetIt.I<SummonerService>();
   var otherSummoner = new Summoner(
       id: '',
@@ -50,13 +52,20 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? prefsName = prefs.getString('name');
     String? prefsSummonerLevel = prefs.getString('summonerLevel');
-    if (prefsName == null && prefsSummonerLevel == null) {
+    String? playedWithMe = prefs.getString('wasPlayed');
+
+    if (prefsName == null &&
+        prefsSummonerLevel == null &&
+        playedWithMe == null) {
       prefsName = "Summoner";
       prefsSummonerLevel = "0";
+      playedWithMe = "Searching...";
     }
+
     setState(() {
       nameCache = prefsName;
       summonerLevelCache = prefsSummonerLevel;
+      played = playedWithMe;
     });
   }
 
@@ -117,7 +126,6 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
   }
 
   _clearInputs() {
-    inputTextMyNickCtrl.clear();
     inputTextCtrl.clear();
     FocusScopeNode currentFocus = FocusScope.of(context);
     currentFocus.unfocus();
@@ -325,6 +333,11 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
               _fetchSummoner(inputTextMyNickCtrl.text, inputTextCtrl.text),
               _getDataCache(),
               _clearInputs(),
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(_isLoading
+                    ? "Searching in Match history..."
+                    : "Other Summoner " + played.toString()),
+              )),
             }
         },
         child: _isLoading
