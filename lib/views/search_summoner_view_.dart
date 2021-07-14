@@ -70,6 +70,9 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
   }
 
   Future<void> _fetchSummoner(nickName, otherNickName) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? playedWithMe = prefs.getString('wasPlayed');
+
     try {
       var respOther;
       setState(() {
@@ -90,6 +93,10 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
         otherSummoner = respOther;
         _isLoading = false;
       });
+
+      if (playedWithMe.toString() != 'Searching...') {
+        _showFindedOtherSummoner();
+      }
     } catch (e) {
       _showErrorDialog(e);
     }
@@ -106,6 +113,36 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
             child: ListBody(
               children: <Widget>[
                 Text(e.toString()),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                setState(() {
+                  _isLoading = false;
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showFindedOtherSummoner() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("In last 5 matches"),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(otherSummoner.name.toString() + ": " + played.toString()),
               ],
             ),
           ),
@@ -334,9 +371,7 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
               _getDataCache(),
               _clearInputs(),
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(_isLoading
-                    ? "Searching in Match history..."
-                    : "Other Summoner " + played.toString()),
+                content: Text("Searching in Match history..."),
               )),
             }
         },
