@@ -13,7 +13,7 @@ class SummonerService {
     "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
     "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
     "Origin": "https://developer.riotgames.com",
-    "X-Riot-Token": "RGAPI-6638d9ad-b487-40f2-a13b-b16545f81f96"
+    "X-Riot-Token": "RGAPI-8ad19d81-a04d-4a2c-bee7-6a701212701b"
   };
 
   Future<Summoner> getDataSummoner(nickName) {
@@ -30,7 +30,9 @@ class SummonerService {
             name: summonerFromJson['name'].toString(),
             profileIconId: summonerFromJson['profileIconI d'].toString(),
             revisionDate: summonerFromJson['revisionDate'].toString(),
-            summonerLevel: summonerFromJson['summonerLevel'].toString());
+            summonerLevel: summonerFromJson['summonerLevel'].toString(),
+            wasPlayed: '',
+        );
 
         storeCache(summoner);
         return summoner;
@@ -41,7 +43,9 @@ class SummonerService {
     });
   }
 
-  Future<Summoner> getDataEnemy(nickName) {
+  Future getDataEnemy(nickName) async {
+    final prefs = await SharedPreferences.getInstance();
+
     return http
         .get(Uri.parse(api + nickName), headers: headers)
         .then((response) {
@@ -57,11 +61,18 @@ class SummonerService {
             name: summonerFromJson['name'].toString(),
             profileIconId: summonerFromJson['profileIconId'].toString(),
             revisionDate: summonerFromJson['revisionDate'].toString(),
-            summonerLevel: summonerFromJson['summonerLevel'].toString());
+            summonerLevel: summonerFromJson['summonerLevel'].toString(),
+            wasPlayed: '',
+        );
 
-        matchService.getMatches(summoner.puuid);
+       matchService.getMatches(summoner.puuid).then((resp) {
+          print("JA JOGOU COMIGO: "+resp.toString());
+          //summoner.wasPlayed = resp.toString();
+          //return summoner;
+        });
 
         return summoner;
+
       } else {
         print("RESPONSE " + response.statusCode.toString());
         throw Exception('Failed to load data of Other Summoner');

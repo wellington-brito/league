@@ -8,23 +8,25 @@ class MatchService {
     "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
     "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
     "Origin": "https://developer.riotgames.com",
-    "X-Riot-Token": "RGAPI-6638d9ad-b487-40f2-a13b-b16545f81f96"
+    "X-Riot-Token": "RGAPI-8ad19d81-a04d-4a2c-bee7-6a701212701b"
   };
 
-  getMatches(puuidOtherSummoner) {
+  Future getMatches(puuidOtherSummoner) async{
     var matchesId = [];
+    final prefs = await SharedPreferences.getInstance();
+    var myPuuid = prefs.getString('puuid');
     return http
         .get(
             Uri.parse(
                 'https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/' +
-                    puuidOtherSummoner +
+                    myPuuid! +
                     '/ids?start=0&count=5'),
             headers: headers)
         .then((response) {
       if (response.statusCode == 200) {
         print(response.body);
         matchesId = jsonDecode(response.body);
-        getTimeLine(matchesId, puuidOtherSummoner);
+        return getTimeLine(matchesId, puuidOtherSummoner);
       } else {
         throw Exception('Failed to load data of matches');
       }
@@ -32,7 +34,6 @@ class MatchService {
   }
 
   Future getTimeLine(matchesId, puuidOtherSummoner) {
-    print("MATCHESID: " + matchesId[0]);
     return http
         .get(
             Uri.parse(
@@ -44,7 +45,7 @@ class MatchService {
       if (response.statusCode == 200) {
         var matchTimeLine = jsonDecode(response.body);
         var matchSummoners = matchTimeLine['metadata']['participants'];
-        checkPuuid(matchSummoners);
+        return checkPuuid(matchSummoners);
       } else {
         throw Exception('Failed to load data of matches');
       }
@@ -54,21 +55,17 @@ class MatchService {
   Future checkPuuid(matchSummoners) async {
     final prefs = await SharedPreferences.getInstance();
     var myPuuid = prefs.getString('puuid');
-
+    bool wasPlayed = false;
+    var count = 0;
     for (var item in matchSummoners) {
       if (item.toString() == myPuuid.toString()) {
-        print(item + " this player was played with you!");
-        print("Other Puuid: " + item.toString());
-        print("My Puuid: " + myPuuid.toString());
-        storeCache(item);
-        break;
+        await prefs.setString('wasPlayed', 'Played With you.');
+        return true;
       }
+      count ++;
     }
-  }
-
-  Future storeCache(summoner) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('wasPlayed', 'Played With you.');
-    print("WasPlayed: Saved in cache.");
+    if(count == matchSummoners.lenght){
+      return wasPlayed;
+    }
   }
 }

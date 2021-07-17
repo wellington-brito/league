@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:league/models/summoner.dart';
 import 'package:league/services/summoner_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 String? nameCache = "";
 String nameCacheConverted = "";
@@ -29,7 +30,8 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
       name: 'Other Summoner',
       profileIconId: '',
       revisionDate: '',
-      summonerLevel: '0');
+      summonerLevel: '0',
+      wasPlayed: '',);
   var summoner = new Summoner(
       id: '',
       accountId: '',
@@ -37,7 +39,8 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
       name: '',
       profileIconId: '',
       revisionDate: '',
-      summonerLevel: '');
+      summonerLevel: '',
+      wasPlayed: '',);
   final inputTextMyNickCtrl = TextEditingController();
   final inputTextCtrl = TextEditingController();
 
@@ -57,9 +60,9 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
     if (prefsName == null &&
         prefsSummonerLevel == null &&
         playedWithMe == null) {
-      prefsName = "Summoner";
-      prefsSummonerLevel = "0";
-      playedWithMe = "Searching...";
+        prefsName = "Summoner";
+        prefsSummonerLevel = "0";
+        playedWithMe = "Searching...";
     }
 
     setState(() {
@@ -89,41 +92,57 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
       setState(() {
         otherSummoner = respOther;
         _isLoading = false;
+        _searchFinished();
       });
     } catch (e) {
       _showErrorDialog(e);
     }
   }
 
-  Future<void> _showErrorDialog(e) async {
-    return showDialog<void>(
+  Future<void> _searchFinished() async {
+    Alert(
       context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Error on Load data.'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(e.toString()),
-              ],
-            ),
+      type: AlertType.success,
+      title: "Done!",
+      desc: otherSummoner.name.toString()+" - "+played.toString(),
+      buttons: [
+        DialogButton(
+          child: Text(
+            "OK",
+            style: TextStyle(color: Colors.white, fontSize: 20),
           ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                setState(() {
-                  _isLoading = false;
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+          onPressed: ()  {
+            setState(() => _isLoading = false);
+            Navigator.of(context).pop();
+          },
+          width: 120,
+        )
+      ],
+    ).show();
   }
+
+  Future<void> _showErrorDialog(e) async {
+    Alert(
+      context: context,
+      type: AlertType.error,
+      title: "Error on Load data.",
+      desc: e.toString(),
+      buttons: [
+        DialogButton(
+          child: Text(
+            "OK",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: ()  {
+            setState(() => _isLoading = false);
+            Navigator.of(context).pop();
+          },
+          width: 120,
+        )
+      ],
+    ).show();
+  }
+
 
   _clearInputs() {
     inputTextCtrl.clear();
@@ -336,13 +355,13 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(_isLoading
                     ? "Searching in Match history..."
-                    : "Other Summoner " + played.toString()),
+                    : "Search finished." ),
               )),
             }
         },
-        child: _isLoading
-            ? Icon(Icons.hourglass_top_sharp)
-            : Icon(Icons.manage_search),
+        // child: _isLoading
+        //     ? Icon(Icons.hourglass_top_sharp)
+        //     : Icon(Icons.manage_search),
       ),
     );
   }
