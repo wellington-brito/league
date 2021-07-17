@@ -1,4 +1,5 @@
 class Summoner {
+
   String id = '', accountId = '', puuid = '', name = '', profileIconId = '', revisionDate = '', summonerLevel = '', wasPlayed = '';
 
   Summoner({
@@ -12,8 +13,10 @@ class Summoner {
     required this.wasPlayed
   });
 
-  factory Summoner.fromJson(Map<String, dynamic> json){
+
+  factory Summoner.fromJson(Map<String, dynamic> json) {
     return Summoner(
+
       id: json['id'],
       accountId: json['accountId'],
       puuid: json['puuid'],
@@ -23,5 +26,6 @@ class Summoner {
       summonerLevel: json['summonerLevel'],
       wasPlayed: json['wasPlayed'],
     );
+
   }
 }

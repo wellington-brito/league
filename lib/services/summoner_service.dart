@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:league/models/played_summoner.dart';
 import 'package:league/models/summoner.dart';
 import 'package:http/http.dart' as http;
 import 'package:league/services/match_service.dart';
@@ -14,6 +15,7 @@ class SummonerService {
     "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
     "Origin": "https://developer.riotgames.com",
     "X-Riot-Token": "RGAPI-8ad19d81-a04d-4a2c-bee7-6a701212701b"
+
   };
 
   Future<Summoner> getDataSummoner(nickName) {
@@ -71,6 +73,9 @@ class SummonerService {
           //return summoner;
         });
 
+
+        var playedSummoner = matchService.getMatches(summoner.puuid);
+        //print(playedSummoner['name']);
         return summoner;
 
       } else {
