@@ -77,7 +77,8 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
     String? playedWithMe = prefs.getString('wasPlayed');
 
     try {
-      var respOther;
+      var respOther, arrayteste;
+
       setState(() {
         _isLoading = true;
       });
@@ -88,44 +89,23 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
       }
 
       if (otherNickName != '') {
-        respOther = await service.getDataEnemy(otherNickName);
+        arrayteste = await service.getDataEnemy(otherNickName);
+        respOther = arrayteste[0];
         _getDataCache();
       }
+
+      arrayteste[1] ? played = "Was Played" : played = "NOT Played";
 
       setState(() {
         otherSummoner = respOther;
         _isLoading = false;
         _searchFinished();
+
       });
 
-      if (playedWithMe.toString() != 'Searching...') {
-        _showFindedOtherSummoner();
-      }
     } catch (e) {
       _showErrorDialog(e);
     }
-  }
-
-  Future<void> _searchFinished() async {
-    Alert(
-      context: context,
-      type: AlertType.success,
-      title: "Done!",
-      desc: otherSummoner.name.toString()+" - "+played.toString(),
-      buttons: [
-        DialogButton(
-          child: Text(
-            "OK",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-          onPressed: ()  {
-            setState(() => _isLoading = false);
-            Navigator.of(context).pop();
-          },
-          width: 120,
-        )
-      ],
-    ).show();
   }
 
   Future<void> _showErrorDialog(e) async {
@@ -150,37 +130,27 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
     ).show();
   }
 
-
-  Future<void> _showFindedOtherSummoner() async {
-    return showDialog<void>(
+  Future<void> _searchFinished() async {
+    Alert(
       context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("In last 5 matches"),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(otherSummoner.name.toString() + ": " + played.toString()),
-              ],
-            ),
+      type: played.toString() == "Was Played" ? AlertType.success: AlertType.error,
+      title: "In last 5 matches",
+      desc: otherSummoner.name.toString()+" - "+played.toString()+" with you.",
+      buttons: [
+        DialogButton(
+          child: Text(
+            "OK",
+            style: TextStyle(color: Colors.white, fontSize: 20),
           ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                setState(() {
-                  _isLoading = false;
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+          onPressed: ()  {
+            setState(() => _isLoading = false);
+            Navigator.of(context).pop();
+          },
+          width: 120,
+        )
+      ],
+    ).show();
   }
-
 
   _clearInputs() {
     inputTextCtrl.clear();
@@ -391,13 +361,8 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
               _getDataCache(),
               _clearInputs(),
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-<<<<<<< HEAD
-                content: Text(_isLoading
-                    ? "Searching in Match history..."
-                    : "Search finished." ),
-=======
-                content: Text("Searching in Match history..."),
->>>>>>> 8c13ae15582c58b922a5dd91f18625ebbf2e6d4f
+                content: Text( _isLoading
+                    ? "": "Searching in Match history..." ),
               )),
             }
         },
