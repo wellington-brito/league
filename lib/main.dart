@@ -18,25 +18,46 @@ void setUpLocator() {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  final primaryColor = const Color(0xFFC19B4F);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'League',
       theme: ThemeData(
-        // Define the default brightness and colors.
-        brightness: Brightness.dark,
-        primaryColor: Colors.deepPurple,
-        accentColor: Colors.deepPurpleAccent,
-
+        // brightness: Brightness.dark,
+        scaffoldBackgroundColor: Color(0xFF101516),
+        primaryColor: Color(0xFFC19B4F),
+        secondaryHeaderColor: Color(0xFFC19B4F),
+        accentColor: Color(0xFFC19B4F),
+        cardTheme: CardTheme(
+          color: Color(0xFF11282A),
+          shadowColor: Color(0xFF088A9F),
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+            backgroundColor: Color(0xFF088A9F), elevation: 12),
         // Define the default font family.
-        fontFamily: 'Oxygen',
-        // Define the default TextTheme. Use this to specify the default
-        // text styling for headlines, titles, bodies of text, and more.
-        // textTheme: TextTheme(
-        //   headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-        //   headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
-        //   bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
-        // ),
+        fontFamily: 'Roboto',
+        textTheme: TextTheme(
+          headline1: TextStyle(
+              fontSize: 72.0,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFFC19B4F)),
+          headline6: TextStyle(
+              fontSize: 36.0,
+              fontStyle: FontStyle.italic,
+              color: Color(0xFFC19B4F)),
+          bodyText1: TextStyle(
+              fontSize: 14.0, fontFamily: 'Roboto', color: Color(0xFFC19B4F)),
+          bodyText2: TextStyle(
+              fontSize: 14.0, fontFamily: 'Roboto', color: Color(0xFFC19B4F)),
+          subtitle1: TextStyle(
+            color: Color(0xFFC19B4F),
+          ),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          fillColor: Color(0xFFC19B4F),
+          hintStyle: TextStyle(color: Color(0xFF604518)),
+        ),
       ),
       home: SearchSummonerView(),
       //home: ChampionList(),

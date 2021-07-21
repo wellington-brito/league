@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:league/models/summoner.dart';
 import 'package:http/http.dart' as http;
 import 'package:league/services/match_service.dart';
@@ -13,7 +12,7 @@ class SummonerService {
     "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
     "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
     "Origin": "https://developer.riotgames.com",
-    "X-Riot-Token": "RGAPI-40be81fc-fecd-4a8d-904e-061a13976235"
+    "X-Riot-Token": "RGAPI-befebfc0-23fc-4918-8806-b42591419c54"
   };
 
   Future<Summoner> getDataSummoner(nickName) {
@@ -43,7 +42,6 @@ class SummonerService {
   }
 
   Future getDataEnemy(nickName) async {
-    final prefs = await SharedPreferences.getInstance();
     MatchService matchService = new MatchService();
     var respSummoner = await http
         .get(Uri.parse(api + nickName), headers: headers)
@@ -67,12 +65,10 @@ class SummonerService {
       }
     });
 
-
-    var wasPlayed = await matchService.getMatches(respSummoner.puuid.toString());
+    var wasPlayed =
+        await matchService.getMatches(respSummoner.puuid.toString());
     print(wasPlayed);
-    //print("JA JOGOU COMIGO: "+teste.toString());
-
-    return [respSummoner,wasPlayed];
+    return [respSummoner, wasPlayed];
   }
 
   Future storeCache(summoner) async {
