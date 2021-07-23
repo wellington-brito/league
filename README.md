@@ -47,7 +47,7 @@ samples, guidance on mobile development, and a full API reference.
 >>changes layout theme color and validation on inputs.<br>
 >>getting matchesId from history matches of summoner and searching in the matchesTimeline for identificate matches that the summoners play with me.<br> 
 
->>Layout Buil 1 get players from api - Layout Build 2 ALREADY played - Layout Build 2 NOT ALREADY played <br>
+>>Build 1 get players from api  -  Build 2 ALREADY played  -  Build 2 NOT ALREADY played <br>
 ![](layout_build_1.gif) ![](layout_build_2_succes.gif) ![](layout_build_2_error.gif)
 <br>
 ### Next Steps
