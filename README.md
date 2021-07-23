@@ -38,7 +38,7 @@ samples, guidance on mobile development, and a full API reference.
 >>Late initialization solved whit future functions and state management<br>
 >>Navigation.push to second screen for search summoner. Changed main.dart to start app with screen to search other summoner.<br>
 
->### v0.0.5
+>### v0.0.5 :heavy_check_mark:
 >I want to search in my history matches if another player was played with me.<br>
 >Changes in design layout of app.<br>
 >>get list with the last five matchesId of summoner in sharedPref. (user of app).<br>
