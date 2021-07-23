@@ -50,9 +50,9 @@ samples, guidance on mobile development, and a full API reference.
 >>Gif 1: get players from api<br>
 >>Gif 2: other summoner ALREADY played with you in last 5 matches<br>
 >>Gif 3: other summoner NOT ALREADY played with you in last 5 matches<br>
-![](layout_build_1.gif) ![](layout_build_2_succes.gif) ![](layout_build_2_error.gif)
-<br>
->### Next Steps :clipboard:<br>
+>>![](layout_build_1.gif) ![](layout_build_2_succes.gif) ![](layout_build_2_error.gif)<br>
+
+>### Next Steps :clipboard:
 >Do refactor code.<br>
 >Learn about state control with [Provider](https://pub.dev/packages/provider)<br>
 >Learn about automated testing.<br>
