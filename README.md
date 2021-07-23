@@ -60,7 +60,7 @@ samples, guidance on mobile development, and a full API reference.
 >StorageData and assets.<br>
 
 ### Content that i'am following to do this project can be finded in:
-- [Programming Addict - Interacting with a REST API | HTTP Methods, Status Codes... | Consuming a REST API in Flutter] (https://www.youtube.com/watch?v=ZMNp9Ev6cl0)<br>
+[Programming Addict - Interacting with a REST API | HTTP Methods, Status Codes... | Consuming a REST API in Flutter](https://www.youtube.com/watch?v=ZMNp9Ev6cl0)<br>
 
 ### Main Troubles
-- [Insecure HTTP connections are disabled by default on iOS and Android](https://flutter.dev/docs/release/breaking-changes/network-policy-ios-android)
+[Insecure HTTP connections are disabled by default on iOS and Android](https://flutter.dev/docs/release/breaking-changes/network-policy-ios-android)
