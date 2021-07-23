@@ -48,8 +48,8 @@ samples, guidance on mobile development, and a full API reference.
 >>getting matchesId from history matches of summoner and searching in the matchesTimeline for identificate matches that the summoners play with me.<br> 
 
 >>Gif 1: get players from api<br>
->>Gif 2: other summoner ALREADY played<br>
->>Gif 3: other summoner NOT ALREADY played<br>
+>>Gif 2: other summoner ALREADY played with you in last 5 matches<br>
+>>Gif 3: other summoner NOT ALREADY played with you in last 5 matches<br>
 ![](layout_build_1.gif) ![](layout_build_2_succes.gif) ![](layout_build_2_error.gif)
 <br>
 ### Next Steps
