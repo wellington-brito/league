@@ -53,6 +53,8 @@ samples, guidance on mobile development, and a full API reference.
 ![](layout_build_1.gif) ![](layout_build_2_succes.gif) ![](layout_build_2_error.gif)
 <br>
 ### Next Steps
+>Do refactor code.<br>
+>Learn about state control with [Provider](https://pub.dev/packages/provider)<br>
 >Learn about automated testing.<br>
 >For this version i'm going to do some tests to learn about automated testing in flutter aplication.<br>
 >StorageData and assets.<br>
