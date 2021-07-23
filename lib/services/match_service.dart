@@ -8,7 +8,7 @@ class MatchService {
     "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
     "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
     "Origin": "https://developer.riotgames.com",
-    "X-Riot-Token": "RGAPI-befebfc0-23fc-4918-8806-b42591419c54"
+    "X-Riot-Token": "RGAPI-d6580a15-d3e8-4938-97e2-9445af1cf45b"
   };
 
   getMatches(puuidOtherSummoner) async {
@@ -62,7 +62,6 @@ class MatchService {
 
   Future checkPuuid(matchSummoners, puuidOtherSummoner) async {
     final prefs = await SharedPreferences.getInstance();
-    var myPuuid = prefs.getString('puuid');
     var count = 0;
     for (var item in matchSummoners) {
       print("COUNT: " + count.toString());

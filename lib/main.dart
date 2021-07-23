@@ -31,10 +31,8 @@ class MyApp extends StatelessWidget {
         accentColor: Color(0xFFC19B4F),
         cardTheme: CardTheme(
           color: Color(0xFF11282A),
-          shadowColor: Color(0xFF088A9F),
+          shadowColor: Color(0xFF5FD8FF),
         ),
-        floatingActionButtonTheme: FloatingActionButtonThemeData(
-            backgroundColor: Color(0xFF088A9F), elevation: 12),
         // Define the default font family.
         fontFamily: 'Roboto',
         textTheme: TextTheme(

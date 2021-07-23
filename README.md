@@ -47,6 +47,9 @@ samples, guidance on mobile development, and a full API reference.
 >>changes layout theme color and validation on inputs.<br>
 >>getting matchesId from history matches of summoner and searching in the matchesTimeline for identificate matches that the summoners play with me.<br> 
 
+>>Layout Buil 1
+![ Layout Buil 1](layout_build_1.gif) / ! [](layout_build_1.gif.gif)
+<br>
 ### Next Steps
 >Learn about automated testing.<br>
 >For this version i'm going to do some tests to learn about automated testing in flutter aplication.<br>
