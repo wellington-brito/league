@@ -17,8 +17,6 @@ void setUpLocator() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  final primaryColor = const Color(0xFFC19B4F);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

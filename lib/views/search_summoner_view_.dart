@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:league/models/summoner.dart';
 import 'package:league/services/summoner_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
 String? nameCache = "";
 String nameCacheConverted = "";
@@ -58,8 +57,7 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
     String? prefsName = prefs.getString('name');
     String? prefsSummonerLevel = prefs.getString('summonerLevel');
 
-    if (prefsName == null &&
-        prefsSummonerLevel == null) {
+    if (prefsName == null && prefsSummonerLevel == null) {
       prefsName = "Summoner";
       prefsSummonerLevel = "0";
     }
@@ -85,9 +83,7 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
         respOther = arrayteste[0];
         _getDataCache();
       }
-      arrayteste[1]
-          ? played = "ALREADY played"
-          : played = "NOT ALREADY played";
+      arrayteste[1] ? played = "ALREADY played" : played = "NOT ALREADY played";
 
       setState(() {
         otherSummoner = respOther;
@@ -105,14 +101,18 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('In last 5 matches',style: TextStyle(fontSize: 20)),
+          title:
+              const Text('In last 5 matches', style: TextStyle(fontSize: 20)),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text( otherSummoner.name.toString() +
-                        " - " +
-                        played.toString() +
-                        " with you.", style: TextStyle(fontSize: 16),),
+                Text(
+                  otherSummoner.name.toString() +
+                      " - " +
+                      played.toString() +
+                      " with you.",
+                  style: TextStyle(fontSize: 16),
+                ),
               ],
             ),
           ),
@@ -138,11 +138,15 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Error on Load data.',style: TextStyle(fontSize: 16)),
+          title:
+              const Text('Error on Load data.', style: TextStyle(fontSize: 16)),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(e.toString(), style: TextStyle(fontSize: 16),),
+                Text(
+                  e.toString(),
+                  style: TextStyle(fontSize: 16),
+                ),
               ],
             ),
           ),
@@ -363,7 +367,6 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-
         onPressed: () => {
           if (_formKey.currentState!.validate())
             {
