@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:league/models/summoner.dart';
 import 'package:league/services/summoner_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
 String? nameCache = "";
 String nameCacheConverted = "";
@@ -23,7 +22,7 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
   final _formKey = GlobalKey<FormState>();
 
   SummonerService get service => GetIt.I<SummonerService>();
-  var otherSummoner = new Summoner(
+  Summoner otherSummoner = new Summoner(
     id: '',
     accountId: '',
     puuid: '',
@@ -33,7 +32,7 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
     summonerLevel: '0',
     wasPlayed: '',
   );
-  var summoner = new Summoner(
+  Summoner summoner = new Summoner(
     id: '',
     accountId: '',
     puuid: '',
@@ -58,8 +57,7 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
     String? prefsName = prefs.getString('name');
     String? prefsSummonerLevel = prefs.getString('summonerLevel');
 
-    if (prefsName == null &&
-        prefsSummonerLevel == null) {
+    if (prefsName == null && prefsSummonerLevel == null) {
       prefsName = "Summoner";
       prefsSummonerLevel = "0";
     }

@@ -5,7 +5,7 @@ class Summoner {
   Summoner({
     required this.id,
     required this.accountId,
-    required this.puuid,
+    required this.puuid, 
     required this.name,
     required this.profileIconId,
     required this.revisionDate,
