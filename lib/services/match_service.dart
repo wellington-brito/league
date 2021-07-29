@@ -9,7 +9,6 @@ class MatchService {
     "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
     "Origin": "https://developer.riotgames.com",
     "X-Riot-Token": ""
-
   };
 
   getMatches(puuidOtherSummoner) async {

@@ -14,7 +14,7 @@ A few resources to get you started if this is your first Flutter project:
 - [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
 For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
+-[online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
 
@@ -38,7 +38,7 @@ samples, guidance on mobile development, and a full API reference.
 >>Late initialization solved whit future functions and state management<br>
 >>Navigation.push to second screen for search summoner. Changed main.dart to start app with screen to search other summoner.<br>
 
->### v0.0.5
+>### v0.0.5 :heavy_check_mark:
 >I want to search in my history matches if another player was played with me.<br>
 >Changes in design layout of app.<br>
 >>get list with the last five matchesId of summoner in sharedPref. (user of app).<br>
@@ -47,16 +47,20 @@ samples, guidance on mobile development, and a full API reference.
 >>changes layout theme color and validation on inputs.<br>
 >>getting matchesId from history matches of summoner and searching in the matchesTimeline for identificate matches that the summoners play with me.<br> 
 
->>Layout Buil 1<br>
-![](layout_build_1.gif) ![](layout_build_2_succes.gif) ![](layout_build_2_error.gif)
-<br>
-### Next Steps
+>>Gif 1: get players from api<br>
+>>Gif 2: other summoner ALREADY played with you in last 5 matches<br>
+>>Gif 3: other summoner NOT ALREADY played with you in last 5 matches<br><br>
+>>![](layout_build_1.gif) ![](layout_build_2_succes.gif) ![](layout_build_2_error.gif)<br>
+
+>### Next Steps :clipboard:
+>Do refactor code.<br>
+>Learn about state control with [Provider](https://pub.dev/packages/provider)<br>
 >Learn about automated testing.<br>
 >For this version i'm going to do some tests to learn about automated testing in flutter aplication.<br>
 >StorageData and assets.<br>
 
 ### Content that i'am following to do this project can be finded in:
-- [Programming Addict - Interacting with a REST API | HTTP Methods, Status Codes... | Consuming a REST API in Flutter] (https://www.youtube.com/watch?v=ZMNp9Ev6cl0)<br>
+- [Programming Addict - Interacting with a REST API | HTTP Methods, Status Codes... | Consuming a REST API in Flutter](https://www.youtube.com/watch?v=ZMNp9Ev6cl0)<br>
 
 ### Main Troubles
 - [Insecure HTTP connections are disabled by default on iOS and Android](https://flutter.dev/docs/release/breaking-changes/network-policy-ios-android)

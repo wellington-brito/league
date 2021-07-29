@@ -13,7 +13,6 @@ class SummonerService {
     "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
     "Origin": "https://developer.riotgames.com",
     "X-Riot-Token": ""
-
   };
 
   Future<Summoner> getDataSummoner(nickName) {
@@ -37,7 +36,8 @@ class SummonerService {
         storeCache(summoner);
         return summoner;
       } else {
-        throw Exception('Failed to load data of your summoner - '+response.statusCode.toString());
+        throw Exception('Failed to load data of your summoner - ' +
+            response.statusCode.toString());
       }
     });
   }
@@ -61,7 +61,8 @@ class SummonerService {
         );
         return summoner;
       } else {
-        throw Exception('Failed to load data of Other Summoner - '+response.statusCode.toString());
+        throw Exception('Failed to load data of Other Summoner - ' +
+            response.statusCode.toString());
       }
     });
 
