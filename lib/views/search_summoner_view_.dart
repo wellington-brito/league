@@ -186,7 +186,42 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(otherSummoner.toString()),
+        title: Text(nameCache!),
+      ),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            UserAccountsDrawerHeader(
+                currentAccountPicture: ClipRRect(
+                  borderRadius: BorderRadius.circular(40),
+                  child: Image.network('http://ddragon.leagueoflegends.com/cdn/11.15.1/img/profileicon/685.png'),
+                ),
+                accountName: Text(nameCache!),
+                accountEmail: Text('teste@gmail.com')
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Menu'),
+              onTap: () {
+                print('inicio');
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.book),
+              title: Text('Historico'),
+              onTap: () {
+                print('inicio');
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.arrow_back),
+              title: Text('Sair'),
+              onTap: () {
+                print('inicio');
+              },
+            )
+          ],
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -206,50 +241,12 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
                       key: _formKey,
                       child: Column(
                         children: <Widget>[
-                          // Add TextFormFields and ElevatedButton here.
-                          TextFormField(
-                            cursorColor: Theme.of(context).accentColor,
-                            controller: inputTextMyNickCtrl,
-                            decoration: InputDecoration(
-                              hintText: 'Your summoner name.',
-                              fillColor: Theme.of(context).accentColor,
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Theme.of(context).accentColor,
-                                    width: 2),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your summoner name.';
-                              }
-                              return null;
-                            },
-                          ),
+                        addInputText('Your summoner name','Please enter your summoner name', inputTextMyNickCtrl),
                           const SizedBox(
                             width: 73,
                             height: 10,
                           ),
-                          TextFormField(
-                            controller: inputTextCtrl,
-                            decoration: InputDecoration(
-                              hintText: 'Other Summoner to search.',
-                              fillColor: Theme.of(context).accentColor,
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Theme.of(context).accentColor,
-                                    width: 2),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter other summoner name.';
-                              }
-                              return null;
-                            },
-                          ),
+                        addInputText('Other Summoner to search','Please enter other summoner name', inputTextCtrl),
                         ],
                       ),
                     ),
@@ -386,4 +383,28 @@ class _SearchSummonerViewState extends State<SearchSummonerView> {
       ),
     );
   }
+
+  addInputText (hintText, returnText, textController) {
+    return TextFormField(
+      cursorColor: Theme.of(context).accentColor,
+      controller: textController,
+      decoration: InputDecoration(
+        hintText: hintText,
+        fillColor: Theme.of(context).accentColor,
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+              color: Theme.of(context).accentColor,
+              width: 2),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return returnText;
+        }
+        return null;
+      },
+    );
+  }
+
 }
